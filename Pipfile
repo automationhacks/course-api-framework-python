@@ -7,6 +7,9 @@ verify_ssl = true
 
 [packages]
 requests = "*"
+pytest = "*"
+assertpy = "*"
+jsonpath-ng = "*"
 
 [requires]
 python_version = "3.8"
