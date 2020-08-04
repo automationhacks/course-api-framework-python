@@ -1,2 +1,3 @@
-# course-api-framework-python
-TAU course on Building an API framework with python
+# Building an API framework with Python
+
+This is the code for TAU course on building an API framework with python
