@@ -11,12 +11,10 @@ def test_read_all_has_kent():
     # We use requests.get() with url to make a get request
     response = requests.get(BASE_URI)
     # response from requests has many useful properties
+    # we can assert on the response status code
+    assert_that(response.status_code).is_equal_to(requests.codes.ok)
     # We can get python dict as response by using .json() method
     response_text = response.json()
-    pretty_print(response_text)
-
-    # Also we can assert on the response status code
-    assert_that(response.status_code).is_equal_to(200)
     first_names = [people['fname'] for people in response_text]
     assert_that(first_names).contains('Kent')
 
@@ -39,7 +37,7 @@ def test_new_person_can_be_added():
 
     # We use requests.post method with keyword params to make the request more readable
     response = requests.post(url=BASE_URI, data=payload, headers=headers)
-    assert_that(response.status_code).is_equal_to(204)
+    assert_that(response.status_code).is_equal_to(requests.codes.no_content)
 
     # After user is created, we read all the users and then use filter expression to find if the
     # created user is present in the response list
