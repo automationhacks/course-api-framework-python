@@ -1,10 +1,10 @@
+from json import dumps
+from uuid import uuid4
+
 import requests
 from assertpy.assertpy import assert_that
 
-from json import dumps
 from config import BASE_URI
-from utils.print_helpers import pretty_print
-from uuid import uuid4
 
 
 def test_read_all_has_kent():
@@ -20,6 +20,29 @@ def test_read_all_has_kent():
 
 
 def test_new_person_can_be_added():
+    unique_last_name = create_new_person()
+
+    # After user is created, we read all the users and then use filter expression to find if the
+    # created user is present in the response list
+    peoples = requests.get(BASE_URI).json()
+    is_new_user_created = [person for person in peoples if person['lname'] == unique_last_name]
+    assert_that(is_new_user_created).is_not_empty()
+
+
+def test_created_person_can_be_deleted():
+    persons_last_name = create_new_person()
+    if not persons_last_name:
+        raise AssertionError('User not created')
+
+    peoples = requests.get(BASE_URI).json()
+    newly_created_user = [person for person in peoples if person['lname'] == persons_last_name][0]
+
+    delete_url = f'{BASE_URI}/{newly_created_user["person_id"]}'
+    response = requests.delete(delete_url)
+    assert_that(response.status_code).is_equal_to(requests.codes.ok)
+
+
+def create_new_person():
     # Ensure a user with a unique last name is created everytime the test runs
     # Note: json.dumps() is used to convert python dict to json string
     unique_last_name = f'User {str(uuid4())}'
@@ -38,9 +61,4 @@ def test_new_person_can_be_added():
     # We use requests.post method with keyword params to make the request more readable
     response = requests.post(url=BASE_URI, data=payload, headers=headers)
     assert_that(response.status_code).is_equal_to(requests.codes.no_content)
-
-    # After user is created, we read all the users and then use filter expression to find if the
-    # created user is present in the response list
-    people = requests.get(BASE_URI).json()
-    is_new_user_created = filter(lambda person: person['lname'] == unique_last_name, people)
-    assert_that(is_new_user_created).is_true()
+    return unique_last_name
