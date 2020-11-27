@@ -31,8 +31,6 @@ def test_new_person_can_be_added():
 
 def test_created_person_can_be_deleted():
     persons_last_name = create_new_person()
-    if not persons_last_name:
-        raise AssertionError('User not created')
 
     peoples = requests.get(BASE_URI).json()
     newly_created_user = search_created_user_in(peoples, persons_last_name)[0]
