@@ -25,7 +25,7 @@ def test_new_person_can_be_added():
     # After user is created, we read all the users and then use filter expression to find if the
     # created user is present in the response list
     peoples = requests.get(BASE_URI).json()
-    is_new_user_created = [person for person in peoples if person['lname'] == unique_last_name]
+    is_new_user_created = search_created_user_in(peoples, unique_last_name)
     assert_that(is_new_user_created).is_not_empty()
 
 
@@ -35,7 +35,7 @@ def test_created_person_can_be_deleted():
         raise AssertionError('User not created')
 
     peoples = requests.get(BASE_URI).json()
-    newly_created_user = [person for person in peoples if person['lname'] == persons_last_name][0]
+    newly_created_user = search_created_user_in(peoples, persons_last_name)[0]
 
     delete_url = f'{BASE_URI}/{newly_created_user["person_id"]}'
     response = requests.delete(delete_url)
@@ -60,5 +60,9 @@ def create_new_person():
 
     # We use requests.post method with keyword params to make the request more readable
     response = requests.post(url=BASE_URI, data=payload, headers=headers)
-    assert_that(response.status_code).is_equal_to(requests.codes.no_content)
+    assert_that(response.status_code, description='Person not created').is_equal_to(requests.codes.no_content)
     return unique_last_name
+
+
+def search_created_user_in(peoples, last_name):
+    return [person for person in peoples if person['lname'] == last_name]
