@@ -14,9 +14,11 @@ def test_read_all_has_kent():
     # we can assert on the response status code
     assert_that(response.status_code).is_equal_to(requests.codes.ok)
     # We can get python dict as response by using .json() method
-    response_text = response.json()
-    first_names = [people['fname'] for people in response_text]
-    assert_that(first_names).contains('Kent')
+    response_content = response.json()
+
+    # Use assertpy's fluent assertions to extract all fnames and then see the result is non empty and has
+    # Kent in it.
+    assert_that(response_content).extracting('fname').is_not_empty().contains('Kent')
 
 
 def test_new_person_can_be_added():
