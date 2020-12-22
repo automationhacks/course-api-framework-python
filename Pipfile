@@ -10,6 +10,7 @@ requests = "*"
 pytest = "*"
 assertpy = "*"
 lxml = "*"
+jsonpath-ng = "*"
 
 [requires]
 python_version = "3.8"
