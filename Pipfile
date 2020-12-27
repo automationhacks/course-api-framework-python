@@ -11,6 +11,7 @@ pytest = "*"
 assertpy = "*"
 lxml = "*"
 jsonpath-ng = "*"
+cerberus = "*"
 
 [requires]
 python_version = "3.8"

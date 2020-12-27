@@ -68,6 +68,7 @@ def test_person_can_be_added_with_a_json_template(create_data):
     # Read full syntax: https://pypi.org/project/jsonpath-ng/
     jsonpath_expr = parse("$.[*].lname")
     result = [match.value for match in jsonpath_expr.find(peoples)]
+    print(result)
 
     expected_last_name = create_data['lname']
     assert_that(result).contains(expected_last_name)
