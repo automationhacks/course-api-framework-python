@@ -11,32 +11,30 @@ class Response:
     headers: dict
 
 
-def __get_responses(response):
-    status_code = response.status_code
-    text = response.text
+class APIRequest:
+    def get(self, url):
+        response = requests.get(url)
+        return self.__get_responses(response)
 
-    try:
-        as_dict = response.json()
-    except Exception:
-        as_dict = {}
+    def post(self, url, payload, headers):
+        response = requests.post(url, data=payload, headers=headers)
+        return self.__get_responses(response)
 
-    headers = response.headers
+    def delete(self, url):
+        response = requests.delete(url)
+        return self.__get_responses(response)
 
-    return Response(
-        status_code, text, as_dict, headers
-    )
+    def __get_responses(self, response):
+        status_code = response.status_code
+        text = response.text
 
+        try:
+            as_dict = response.json()
+        except Exception:
+            as_dict = {}
 
-def get(url):
-    response = requests.get(url)
-    return __get_responses(response)
+        headers = response.headers
 
-
-def post(url, payload, headers):
-    response = requests.post(url, data=payload, headers=headers)
-    return __get_responses(response)
-
-
-def delete(url):
-    response = requests.delete(url)
-    return __get_responses(response)
+        return Response(
+            status_code, text, as_dict, headers
+        )
