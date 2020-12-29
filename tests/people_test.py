@@ -2,7 +2,7 @@ import requests
 
 from clients.people.people_client import PeopleClient
 from tests.assertions.people_assertions import *
-from tests.helpers.people_helpers import search_created_user_in, search_nodes_using_json_path
+from tests.helpers.people_helpers import *
 
 client = PeopleClient()
 
