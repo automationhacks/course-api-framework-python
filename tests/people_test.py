@@ -7,10 +7,16 @@ from tests.helpers.people_helpers import *
 client = PeopleClient()
 
 
-def test_read_all_has_kent():
+def test_read_all_has_kent(logger):
+    """
+    Verify people API database GET operation returns a user with first name as kent
+    :param logger:
+    :return:
+    """
     response = client.read_all_persons()
 
     assert_that(response.status_code).is_equal_to(requests.codes.ok)
+    logger.info("User successfully read")
     assert_people_have_person_with_first_name(response, first_name='Kent')
 
 
