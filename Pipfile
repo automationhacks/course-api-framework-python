@@ -12,6 +12,8 @@ assertpy = "*"
 lxml = "*"
 jsonpath-ng = "*"
 cerberus = "*"
+reportportal-client = "*"
+pytest-reportportal = "*"
 
 [requires]
 python_version = "3.8"
