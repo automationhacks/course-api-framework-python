@@ -9,9 +9,7 @@ client = PeopleClient()
 
 def test_read_all_has_kent(logger):
     """
-    Verify people API database GET operation returns a user with first name as kent
-    :param logger:
-    :return:
+    Test on hitting People GET API, we get a user named kent in the list of people
     """
     response = client.read_all_persons()
 
