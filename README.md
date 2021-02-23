@@ -33,6 +33,30 @@ git checkout example/01_setup_python_dependencies
 git checkout <sha>
 ```
 
+## Application under test
+
+This automated test suite covers features of `people-api`, Please refer the Github
+repo [here](https://github.com/automationhacks/people-api).
+
+Note: These tests expect the `people-api` and `covid-tracker` API to be up. You would find instructions in
+the `people-api` repo
+
+## How to run
+
+```zsh
+# Setup report portal on docker
+# Update rp_uuid in pytest.ini with project token
+docker-compose -f docker-compose.yml -p reportportal up -d
+# Launch pipenv
+pipenv shell
+# Install all packages
+pipenv install
+# Run tests via pytest (single threaded)
+python -m pytest
+# RUn tests in parallel
+python -m pytest -n auto
+```
+
 ## Discuss?
 
 Feel free to use the [Github discussions](https://github.com/automationhacks/course-api-framework-python/discussions/1)
