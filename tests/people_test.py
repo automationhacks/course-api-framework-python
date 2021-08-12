@@ -7,16 +7,17 @@ from assertpy.assertpy import assert_that
 from config import BASE_URI
 
 
-def test_read_all_has_kent():
+def test_read_all_has_Dak():
     # We use requests.get() with url to make a get request
     response = requests.get(BASE_URI)
     # response from requests has many useful properties
     # we can assert on the response status code
     assert_that(response.status_code).is_equal_to(requests.codes.ok)
+
     # We can get python dict as response by using .json() method
     response_text = response.json()
-    first_names = [people['fname'] for people in response_text]
-    assert_that(first_names).contains('Kent')
+    first_names = [people['first_name'] for people in response_text]
+    assert_that(first_names).contains('Dak')
 
 
 def test_new_person_can_be_added():
@@ -45,8 +46,8 @@ def create_new_person():
     # Note: json.dumps() is used to convert python dict to json string
     unique_last_name = f'User {str(uuid4())}'
     payload = dumps({
-        'fname': 'New',
-        'lname': unique_last_name
+        'first_name': 'New',
+        'last_name': unique_last_name
     })
 
     # Setting default headers to show that the client accepts json
@@ -63,4 +64,5 @@ def create_new_person():
 
 
 def search_created_user_in(peoples, last_name):
-    return [person for person in peoples if person['lname'] == last_name]
+    return [person for person in peoples if person['last_name'] == last_name]
+
