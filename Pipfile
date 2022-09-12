@@ -9,6 +9,12 @@ verify_ssl = true
 requests = "*"
 pytest = "*"
 assertpy = "*"
+lxml = "*"
+jsonpath-ng = "*"
+cerberus = "*"
+reportportal-client = "*"
+pytest-reportportal = "*"
+pytest-xdist = {extras = ["psutil"], version = "*"}
 
 [requires]
 python_version = "3.8"
